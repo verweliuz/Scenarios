@@ -1,0 +1,7 @@
+name: Scenarios
+version: '${version}'
+main: me.verwelius.scenarios.Scenarios
+api-version: '1.19'
+commands:
+  scenario:
+    aliases: [sc]
