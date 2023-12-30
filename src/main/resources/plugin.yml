@@ -5,3 +5,4 @@ api-version: '1.19'
 commands:
   scenario:
     aliases: [sc]
+    permission: op
