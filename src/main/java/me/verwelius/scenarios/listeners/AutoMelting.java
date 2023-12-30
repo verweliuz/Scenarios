@@ -9,6 +9,7 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class AutoMelting implements Listener {
@@ -19,12 +20,13 @@ public class AutoMelting implements Listener {
         drop.replaceAll(item -> {
             ItemStack stack = item.getItemStack();
 
-            for(Recipe recipe : Bukkit.getRecipesFor(stack)) {
-                if(recipe instanceof FurnaceRecipe furnaceRecipe) {
-                    stack.setType(furnaceRecipe.getResult().getType());
-                    item.setItemStack(stack);
-                    break;
-                }
+            Iterator<Recipe> recipes = Bukkit.recipeIterator();
+            while(recipes.hasNext()) {
+                if(!(recipes.next() instanceof FurnaceRecipe recipe)) continue;
+                if(recipe.getInput().getType() != stack.getType()) continue;
+                stack.setType(recipe.getResult().getType());
+                item.setItemStack(stack);
+                break;
             }
 
             return item;
